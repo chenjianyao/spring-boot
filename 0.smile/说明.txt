@@ -1,0 +1,13 @@
+文件名太长、clone失败
+git config --global core.longpaths true
+
+也可以仅设置当前项目：（测试无效）
+git config core.longpaths true
+
+查看设置状态：
+git config core.longpaths
+
+
+
+
+
