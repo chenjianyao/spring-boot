@@ -27,6 +27,7 @@
 				<spring-javaformat.version>0.0.6</spring-javaformat.version>
 			</properties>
 			<build>
+			  <pluginManagement>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -78,6 +79,7 @@
 						</executions>
 					</plugin>
 				</plugins>
+			  </pluginManagement>	
 			</build>
 			<modules>
 				<module>spring-boot-project</module>
