@@ -8,6 +8,8 @@
 		<artifactId>spring-boot-dependencies</artifactId>
 		<version>${revision}</version>
 		<relativePath>../spring-boot-dependencies</relativePath>
+		<!-- 父项目的pom.xml文件的相对路径。默认值为../pom.xml。maven首先从当前构建项目开始查找父项目的pom文件，然后从本地仓库，最有从远程仓库。RelativePath允许你选择一个不同的位置。 -->
+		<!-- 设定一个空值将始终从仓库中获取，不从本地路径获取，如<relativePath /> -->
 	</parent>
 	<artifactId>spring-boot-parent</artifactId>
 	<packaging>pom</packaging>
@@ -17,6 +19,11 @@
 		<name>Pivotal Software, Inc.</name>
 		<url>https://spring.io</url>
 	</organization>
+	<!-- 引入spring-boot方式二（推荐使用这种）
+		继承spring-boot-dependencies		
+	           修改依赖包版本号:通过properties中重新定义修改依赖包版本号
+	 -->
+	
 	<properties>
 		<main.basedir>${basedir}/../..</main.basedir>
 		<disable.checks>false</disable.checks>
