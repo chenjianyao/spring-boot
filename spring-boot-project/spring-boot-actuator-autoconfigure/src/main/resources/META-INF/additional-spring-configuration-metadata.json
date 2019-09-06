@@ -66,6 +66,12 @@
       "defaultValue": false
     },
     {
+      "name": "management.auditevents.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Whether to enable storage of audit events.",
+      "defaultValue": true
+    },
+    {
       "name": "management.health.cassandra.enabled",
       "type": "java.lang.Boolean",
       "description": "Whether to enable Cassandra health check.",
@@ -123,6 +129,12 @@
       "name": "management.health.mongo.enabled",
       "type": "java.lang.Boolean",
       "description": "Whether to enable MongoDB health check.",
+      "defaultValue": true
+    },
+    {
+      "name": "management.health.ping.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Whether to enable ping health check.",
       "defaultValue": true
     },
     {
@@ -252,6 +264,34 @@
       "deprecation": {
         "level": "error"
       }
+    },
+    {
+      "name": "management.metrics.web.client.request.autotime.enabled",
+      "description": "Whether to automatically time web client requests.",
+      "defaultValue": true
+    },
+    {
+      "name": "management.metrics.web.client.request.autotime.percentiles",
+      "description": "Computed non-aggregable percentiles to publish."
+    },
+    {
+      "name": "management.metrics.web.client.request.autotime.percentiles-histogram",
+      "description": "Whether percentile histograms should be published.",
+      "defaultValue": false
+    },
+    {
+      "name": "management.metrics.web.server.request.autotime.enabled",
+      "description": "Whether to automatically time web server requests.",
+      "defaultValue": true
+    },
+    {
+      "name": "management.metrics.web.server.request.autotime.percentiles",
+      "description": "Computed non-aggregable percentiles to publish."
+    },
+    {
+      "name": "management.metrics.web.server.request.autotime.percentiles-histogram",
+      "description": "Whether percentile histograms should be published.",
+      "defaultValue": false
     },
     {
       "name": "management.server.ssl.ciphers",

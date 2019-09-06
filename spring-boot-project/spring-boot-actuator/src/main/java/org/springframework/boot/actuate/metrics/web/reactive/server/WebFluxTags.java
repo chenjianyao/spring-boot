@@ -18,6 +18,7 @@ package org.springframework.boot.actuate.metrics.web.reactive.server;
 
 import io.micrometer.core.instrument.Tag;
 
+import org.springframework.boot.actuate.metrics.http.Outcome;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.HandlerMapping;
@@ -44,18 +45,6 @@ public final class WebFluxTags {
 	private static final Tag URI_UNKNOWN = Tag.of("uri", "UNKNOWN");
 
 	private static final Tag EXCEPTION_NONE = Tag.of("exception", "None");
-
-	private static final Tag OUTCOME_UNKNOWN = Tag.of("outcome", "UNKNOWN");
-
-	private static final Tag OUTCOME_INFORMATIONAL = Tag.of("outcome", "INFORMATIONAL");
-
-	private static final Tag OUTCOME_SUCCESS = Tag.of("outcome", "SUCCESS");
-
-	private static final Tag OUTCOME_REDIRECTION = Tag.of("outcome", "REDIRECTION");
-
-	private static final Tag OUTCOME_CLIENT_ERROR = Tag.of("outcome", "CLIENT_ERROR");
-
-	private static final Tag OUTCOME_SERVER_ERROR = Tag.of("outcome", "SERVER_ERROR");
 
 	private WebFluxTags() {
 	}
@@ -96,8 +85,7 @@ public final class WebFluxTags {
 	 * @return the uri tag derived from the exchange
 	 */
 	public static Tag uri(ServerWebExchange exchange) {
-		PathPattern pathPattern = exchange
-				.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
+		PathPattern pathPattern = exchange.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
 		if (pathPattern != null) {
 			return Tag.of("uri", pathPattern.getPatternString());
 		}
@@ -132,8 +120,7 @@ public final class WebFluxTags {
 	public static Tag exception(Throwable exception) {
 		if (exception != null) {
 			String simpleName = exception.getClass().getSimpleName();
-			return Tag.of("exception", StringUtils.hasText(simpleName) ? simpleName
-					: exception.getClass().getName());
+			return Tag.of("exception", StringUtils.hasText(simpleName) ? simpleName : exception.getClass().getName());
 		}
 		return EXCEPTION_NONE;
 	}
@@ -147,22 +134,8 @@ public final class WebFluxTags {
 	 */
 	public static Tag outcome(ServerWebExchange exchange) {
 		HttpStatus status = exchange.getResponse().getStatusCode();
-		if (status != null) {
-			if (status.is1xxInformational()) {
-				return OUTCOME_INFORMATIONAL;
-			}
-			if (status.is2xxSuccessful()) {
-				return OUTCOME_SUCCESS;
-			}
-			if (status.is3xxRedirection()) {
-				return OUTCOME_REDIRECTION;
-			}
-			if (status.is4xxClientError()) {
-				return OUTCOME_CLIENT_ERROR;
-			}
-			return OUTCOME_SERVER_ERROR;
-		}
-		return OUTCOME_UNKNOWN;
+		Outcome outcome = (status != null) ? Outcome.forStatus(status.value()) : Outcome.UNKNOWN;
+		return outcome.asTag();
 	}
 
 }
